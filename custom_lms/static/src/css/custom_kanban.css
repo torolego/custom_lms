@@ -1,0 +1,13 @@
+.o_slide_kanban_card {
+    background-color: #343a40 !important; /* Grigio scuro */
+    color: white !important;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+.o_slide_kanban_card[data-category]:not([data-category="False"]) {
+    background-color: white !important; /* Sfondo normale */
+    color: black !important;
+    margin-left: 30px; /* Rientro per le lezioni sotto il capitolo */
+}
+
