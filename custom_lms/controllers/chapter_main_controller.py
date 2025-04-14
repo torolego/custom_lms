@@ -71,10 +71,11 @@ class ChapterMain_Controller(http.Controller):
             'user': user
         })
 
+
     # carousels netflix style
-    @http.route('/lms/courses', type='http', auth="public", website=True)
-    def lms_courses(self):
+    @http.route('/lms/netflix', type='http', auth="public", website=True)
+    def lms_nf_carousel(self):
         channels = request.env['slide.channel'].sudo().search([])
-        return request.render(f'{MODULE_NAME}.lms_course_carousel', {
+        return request.render(f'{MODULE_NAME}.online_course_carousel_view', {
             'channels': channels
         })

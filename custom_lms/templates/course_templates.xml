@@ -1,0 +1,37 @@
+<odoo>
+    <template id="online_course_carousel_view" name="Online Course Carousel">
+        <t t-call="website.layout">
+          <!-- Includi il file JavaScript -->
+            <script type="text/javascript" src="/custom_lms/static/src/js/course_carousel.js"></script>
+            <section class="course-carousel-container">
+                <h2 class="carousel-title">Scopri i Nostri Corsi (<t t-esc="len(channels)"/>)</h2>
+                <t t-if="channels">
+                    <div class="carousel-control prev">&#10094;</div>
+                    <div class="course-carousel">
+                        <t t-foreach="channels" t-as="channel">
+                            <div class="course-card">
+                                <div class="course-image-container">
+                                    <img t-att-src="'/web/image/slide.channel/%s/image_1920' % channel.id"
+                                         class="course-image"
+                                         alt="Course Image"/>
+                                    <div class="course-info-overlay">
+                                        <h4 class="course-title"><t t-esc="channel.name"/></h4>
+                                    </div>
+                                </div>
+                                <div class="course-overlay">
+                                    <h3><t t-esc="channel.name"/></h3>
+                                    <p><strong>Capitoli:</strong> <t t-esc="len(channel.chapter_ids)"/></p>
+                                    <a t-att-href="'/slides/%s' % channel.id" class="btn btn-red">Vai al Corso</a>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                    <div class="carousel-control next">&#10095;</div>
+                </t>
+                <t t-else="">
+                    <p class="text-center">Nessun corso disponibile.</p>
+                </t>
+            </section>
+        </t>
+    </template>
+</odoo>

@@ -29,7 +29,8 @@ class SlideChannel(models.Model):
     # | LEVEL 3 | ASSOCIAZIONE ALLE LEZIONI (LESSONS) | RELAZIONE ONE2MANY
    
         # CAPITOLI (CHAPTERS) E LEZIONI (LESSONS)
-
+  
+    chapter_ids = fields.One2many('slide.slide', 'channel_id', string="Slides and categories (Chapters)", copy=True)
     # slide_ids = fields.One2many('slide.slide', 'channel_id', string="Slides and categories (Chapters)", copy=True)
 
         # CONTENUTI (LESSONS & CHAPTERS & CATEGORIES)
@@ -38,7 +39,23 @@ class SlideChannel(models.Model):
 
 # ==================================================================================================================
 
+    short_description = fields.Html(
+        string="Descrizione Breve",
+        compute="_compute_short_description",
+        store=True,  # Opzionale: memorizza il valore nel database
+    )
 
+    @api.depends('description')
+    def _compute_short_description(self):
+        for record in self:
+            
+            if record.description and len(record.description) > 30:
+                record.short_description = Markup(html.unescape(self.description[:30])) + '...'
+                #record.short_description = record.description[:30] + '...'
+            else:
+                record.short_description = record.description or "Nessuna descrizione disponibile"
+
+    
 
     # CUSTOM HTML SECTION (PRE-MAIN CONTENT | PRE-HOME SECTION)
     # ==================================================================================================================
@@ -61,12 +78,12 @@ class SlideChannel(models.Model):
 # ==================================================================================================================
 
 class SlideChapter(models.Model):
-    _inherit = "slide.slide"  # Eredita da slide.slide
+   # _name = 'slide.chapter'  # Nome tecnico del nuovo modello
+    _inherit = 'slide.slide'  # Eredita da slide.slide
     _description = "Course Chapter"
 
     name = fields.Char('Title', required=True, translate=False)  # ❌ Rimuoviamo la traduzione
     #slide_id = fields.Many2one('slide.slide', string="Content", ondelete="cascade", index=True, required=True)
-
 
   #  name_string = fields.Char(
   #      string="Name String",
@@ -123,7 +140,15 @@ class SlideChapter(models.Model):
     # Rinomina channel_id per mantenere la compatibilità
     #channel_id = fields.Many2one("slide.channel", string="Course", required=True)
 
-    
+    # Rinomina il campo Many2many per evitare conflitti
+    chapter_tag_ids = fields.Many2many(
+        'slide.tag',  # Modello relazionato
+        'slide_chapter_tag_rel',  # Nome della tabella di relazione
+        'chapter_id',  # Nome della colonna per slide.chapter
+        'tag_id',  # Nome della colonna per slide.tag
+        string='Chapter Tags'
+    )
+
     progress = fields.Float(
         string="Progress (%)",
          compute="_compute_progress",
@@ -199,6 +224,13 @@ class SlideLesson(models.Model):
             slide.slug = re.sub(r'[^a-zA-Z0-9]+', '-', slide.name).strip('-').lower()
 
 
+    # Funzione per rendere sicura la descrizione HTML
+    def get_safe_description(self):    
+        if self.description:
+            return Markup(html.unescape(self.description or ""))
+        return ""
+
+
 class SlideSlide(models.Model):
     _inherit = 'slide.slide'
 
@@ -221,3 +253,24 @@ class SlideSlide(models.Model):
             'view_id': self.env.ref(view_id).id,
             'target': 'current'
         }
+
+    description_html = fields.Html(
+        string="Desc. HTML",
+        sanitize=False,
+        default="<p>Descrizione <strong>HTML</strong></p>"
+    )
+
+    # Funzione per rendere sicura la descrizione HTML
+    def get_safe_description(self):    
+        if self.description_html:
+            return Markup(html.unescape(self.description_html or ""))
+        return ""
+
+    # Rinomina il campo Many2many per evitare conflitti
+    tag_ids = fields.Many2many(
+            'slide.tag',  # Modello relazionato
+            'slide_slide_tag_rel',  # Nome della tabella di relazione
+            'slide_id',  # Nome della colonna per slide.slide
+            'tag_id',  # Nome della colonna per slide.tag
+            string='Tags'
+        )

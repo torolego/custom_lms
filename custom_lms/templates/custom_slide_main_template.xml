@@ -153,8 +153,13 @@
                                                 </a>
                                             </h5>
                                             <p class="card-text text-muted">
-                                                <t t-esc="lesson.description"/>
+                                                  <t t-if="lesson.description">
+                                                    <p class="text-muted"><t t-esc="object.get_safe_description()"/></p>
+                                                 </t>
+
                                             </p>
+
+                        
 
                                             <!-- Stato della lezione -->
                                             <t t-if="lesson.completed">

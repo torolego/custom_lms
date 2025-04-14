@@ -1,0 +1,167 @@
+/* Container principale del carosello */
+.course-carousel-container {
+    position: relative;
+    margin: 0 auto;
+    overflow: visible; /* Cambiato da hidden a visible */
+    background-color: #1a1a1a;
+    padding: 40px 20px;
+    border-radius: 0;
+    height: 400px; /* Riduci l'altezza */
+    border: 2px solid red; /* Debug: verifica i limiti del contenitore */
+}
+
+/* Titolo del carosello */
+.carousel-title {
+    text-align: center;
+    color: white;
+    font-size: 28px;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+/* Contenitore delle card del carosello */
+.course-carousel {
+    display: flex;
+    gap: 20px;
+    padding: 10px;
+    overflow-x: auto; /* Permette lo scorrimento orizzontale */
+    scroll-behavior: smooth;
+    height: 100%;
+    width: 100%; /* Assicurati che il contenitore occupi tutta la larghezza disponibile */
+    flex-wrap: nowrap; /* Impedisce alle card di andare a capo */
+}
+
+/* Stile delle singole card */
+.course-card {
+    position: relative;
+    flex: 0 0 230px; /* Larghezza fissa */
+    height: 200px;
+    overflow: hidden;
+    border-radius: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin: 0; /* Rimuovi eventuali margini */
+}
+/* Effetto hover sulle card */
+.course-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Contenitore dell'immagine della card */
+.course-image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 0;
+}
+
+/* Immagine della card */
+.course-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+/* Effetto hover sull'immagine */
+.course-card:hover .course-image {
+    transform: scale(1.1);
+}
+
+/* Overlay delle informazioni della card */
+.course-info-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+/* Titolo della card */
+.course-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+      color: white;
+}
+
+/* Overlay aggiuntivo per dettagli */
+.course-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 10px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    border-top: 2px solid red;
+}
+
+/* Mostra l'overlay al passaggio del mouse */
+.course-card:hover .course-overlay {
+    transform: translateY(0);
+}
+
+/* Stile del titolo nell'overlay */
+.course-overlay h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Stile del paragrafo nell'overlay */
+.course-overlay p {
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+/* Bottone rosso */
+.btn-red {
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 3px;
+    display: inline-block;
+    margin-top: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 12px;
+}
+
+/* Effetto hover sul bottone */
+.btn-red:hover {
+    background-color: darkred;
+}
+
+/* Controlli del carosello (frecce) */
+.carousel-control {
+    position: absolute;
+    top: 50%; /* Centra verticalmente */
+    transform: translateY(-50%); /* Centra verticalmente */
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 50%;
+    z-index: 100; /* Aumentato per garantire visibilità */
+    transition: background-color 0.3s ease;
+}
+
+/* Posizionamento della freccia sinistra */
+.carousel-control.prev {
+    left: 10px; /* Posiziona a sinistra */
+}
+
+/* Posizionamento della freccia destra */
+.carousel-control.next {
+    right: 10px; /* Posiziona a destra */
+}

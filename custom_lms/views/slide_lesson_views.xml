@@ -6,6 +6,7 @@
         <field name="arch" type="xml">
            <!-- Sposta category_id subito dopo channel_id -->
             <xpath expr="//field[@name='channel_id']" position="after">
+                <field name="channel_id" position="replace"/>       
                 <field name="category_id" optional="hide"/>
             </xpath>
         </field>

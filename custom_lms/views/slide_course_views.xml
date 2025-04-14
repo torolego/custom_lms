@@ -5,6 +5,7 @@
         <field name="inherit_id" ref="website_slides.view_slide_channel_form"/>
         <field name="arch" type="xml">
 
+
             <!-- Aggiunge una nuova scheda prima della scheda "Content" -->
             <xpath expr="//page[@name='content']" position="before">
                 <page name="custom_content" string="Custom Content">
@@ -13,30 +14,6 @@
                                placeholder="Enter additional HTML content here..." class="oe_inline"/>
                     </group>
                 </page>
-            </xpath>
-
-            <!-- Modifica la lista dei contenuti -->
-            <xpath expr="//page[@name='content']//field[@name='slide_ids']//tree" position="attributes">
-                <attribute name="editable">bottom</attribute>
-            </xpath>
-
-            <!-- Aggiunta del bottone "Edit" nella giusta posizione -->
-            <xpath expr="//page[@name='content']//field[@name='slide_ids']//tree" position="inside">
-                <field name="is_category" invisible="1"/> <!-- Verifica che is_category sia disponibile -->
-                <button name="open_slide_form" string="Edit" type="object" class="oe_highlight"
-                        attrs="{'invisible': [('is_category', '=', False)]}"/>
-            </xpath>
-
-            <!-- Aggiunta del controllo di creazione nel punto corretto -->
-            <xpath expr="//page[@name='content']//field[@name='slide_ids']//tree" position="inside">
-                <control>
-                    <create name="add_slide_section" string="Add Section"
-                            context="{'default_is_category': True, 'form_view_ref': 'custom_lms.view_slide_chapter_form'}"
-                            mode="form"/>
-                    <create name="add_slide_lesson" string="Add Content"
-                            context="{'default_is_category': False, 'form_view_ref': 'custom_lms.view_slide_lesson_form'}"
-                            mode="form"/>
-                </control>
             </xpath>
 
         </field>

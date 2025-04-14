@@ -9,13 +9,14 @@
         "views/slide_chapter_views.xml",
         "views/slide_course_views.xml",
         "views/slide_lesson_views.xml",
-        'templates/lms_carousel_template.xml',
+        'templates/course_templates.xml',
         "templates/custom_slide_main_template.xml",
     ],
     'assets': {
         'web.assets_frontend': [
-            '/custom_lms/static/lib/owl.carousel.js',
-            '/custom_lms/static/lib/owl.carousel.css',
+            'custom_lms/static/src/js/course_carousel.js',   
+            'custom_lms/static/src/css/course_carousel.css',
+
         ],
     },
     'installable': True,
